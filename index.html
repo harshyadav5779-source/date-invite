@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>A Little Question ❤️</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial,sans-serif;
+    min-height:100vh;
+    overflow:hidden;
+    background:linear-gradient(135deg,#ffdde1,#ee9ca7);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.container{
+    width:92%;
+    max-width:500px;
+    background:white;
+    padding:40px 25px;
+    border-radius:25px;
+    text-align:center;
+    box-shadow:0 15px 40px rgba(0,0,0,.15);
+    position:relative;
+    z-index:2;
+}
+
+.screen{
+    display:none;
+}
+
+.screen.active{
+    display:block;
+}
+
+.emoji{
+    font-size:65px;
+    margin-bottom:15px;
+}
+
+h1{
+    color:#e75480;
+    margin-bottom:15px;
+}
+
+p{
+    font-size:18px;
+    line-height:1.5;
+    margin-bottom:25px;
+}
+
+.buttons{
+    display:flex;
+    justify-content:center;
+    gap:15px;
+    position:relative;
+    min-height:55px;
+}
+
+button{
+    border:none;
+    padding:14px 28px;
+    border-radius:30px;
+    font-size:17px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.yes-btn,
+.continue-btn{
+    background:#e75480;
+    color:white;
+}
+
+.yes-btn:hover,
+.continue-btn:hover{
+    transform:scale(1.05);
+}
+
+.no-btn{
+    background:#eee;
+    color:#555;
+}
+
+.continue-btn{
+    width:100%;
+}
+
+.input-group{
+    text-align:left;
+    margin:20px 0;
+}
+
+label{
+    font-weight:bold;
+}
+
+input,
+select{
+    width:100%;
+    padding:14px;
+    margin-top:8px;
+    border:2px solid #f0b4c4;
+    border-radius:12px;
+    font-size:16px;
+    background:white;
+}
+
+#noMessage,
+#errorMessage{
+    color:#e75480;
+    margin-top:12px;
+}
+
+.details{
+    background:#fff0f4;
+    padding:18px;
+    border-radius:15px;
+    text-align:left;
+    margin:20px 0;
+}
+
+.details p{
+    font-size:16px;
+    margin-bottom:8px;
+}
+
+.heart{
+    position:fixed;
+    bottom:-30px;
+    animation:float 6s linear forwards;
+    z-index:1;
+}
+
+@keyframes float{
+
+    from{
+        transform:translateY(0);
+        opacity:0;
+    }
+
+    20%{
+        opacity:1;
+    }
+
+    to{
+        transform:translateY(-110vh);
+        opacity:0;
+    }
+}
+
+.confetti{
+    position:fixed;
+    width:10px;
+    height:10px;
+    top:-10px;
+    animation:fall 3s linear forwards;
+    z-index:10;
+}
+
+@keyframes fall{
+
+    to{
+        transform:translateY(110vh) rotate(720deg);
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div id="hearts"></div>
+
+<div class="container">
+
+
+<!-- SCREEN 1 -->
+
+<section
+id="screen1"
+class="screen active"
+>
+
+<div class="emoji">
+🥹❤️
+</div>
+
+<h1>
+I Have A Little Question...
+</h1>
+
+<p>
+Kya tum mere saath bahar ghoomne chalogi? ❤️
+</p>
+
+<div class="buttons">
+
+<button
+class="yes-btn"
+id="yesBtn"
+>
+Yes ❤️
+</button>
+
+<button
+class="no-btn"
+id="noBtn"
+>
+No 😭
+</button>
+
+</div>
+
+<div id="noMessage"></div>
+
+</section>
+
+
+
+<!-- SCREEN 2 -->
+
+<section
+id="screen2"
+class="screen"
+>
+
+<div class="emoji">
+YAY! 🥳❤️
+</div>
+
+<h1>
+You Said Yes!
+</h1>
+
+<p>
+Ab date aur place decide karte hain 👀❤️
+</p>
+
+<button
+class="continue-btn"
+id="planBtn"
+>
+Choose Date & Place 💕
+</button>
+
+</section>
+
+
+
+<!-- SCREEN 3 -->
+
+<section
+id="screen3"
+class="screen"
+>
+
+<div class="emoji">
+📅📍
+</div>
+
+<h1>
+Let's Make A Plan
+</h1>
+
+
+<div class="input-group">
+
+<label>
+Date 📅
+</label>
+
+<input
+type="date"
+id="date"
+>
+
+</div>
+
+
+
+<div class="input-group">
+
+<label>
+Place 📍
+</label>
+
+<select id="place">
+
+<option value="">
+Choose a place...
+</option>
+
+<option value="Cafe ☕">
+Cafe ☕
+</option>
+
+<option value="Park 🌳">
+Park 🌳
+</option>
+
+<option value="Mall 🛍️">
+Mall 🛍️
+</option>
+
+<option value="Movie 🎬">
+Movie 🎬
+</option>
+
+<option value="Restaurant 🍕">
+Restaurant 🍕
+</option>
+
+<option value="Your Choice ❤️">
+Your Choice ❤️
+</option>
+
+</select>
+
+</div>
+
+
+
+<div
+class="input-group"
+id="customBox"
+style="display:none"
+>
+
+<label>
+Your Place 📍
+</label>
+
+<input
+id="customPlace"
+placeholder="Enter place"
+>
+
+</div>
+
+
+
+<button
+class="continue-btn"
+id="confirmBtn"
+>
+
+Confirm Our Plan ❤️
+
+</button>
+
+<div id="errorMessage"></div>
+
+</section>
+
+
+
+<!-- SCREEN 4 -->
+
+<section
+id="screen4"
+class="screen"
+>
+
+<div class="emoji">
+💖
+</div>
+
+<h1>
+It's A Date!
+</h1>
+
+<p>
+Then it's officially decided 🥹❤️
+</p>
+
+<div class="details">
+
+<p>
+
+<strong>
+📅 Date:
+</strong>
+
+<span id="finalDate"></span>
+
+</p>
+
+<p>
+
+<strong>
+📍 Place:
+</strong>
+
+<span id="finalPlace"></span>
+
+</p>
+
+</div>
+
+<p>
+Can't wait! ❤️✨
+</p>
+
+</section>
+
+
+</div>
+
+
+<script>
+
+
+/* =========================
+   GOOGLE SHEETS URL
+========================= */
+
+const GOOGLE_SCRIPT_URL =
+"https://script.google.com/macros/s/AKfycbzahiDn9ahZ_5kcuC_xNdvJ9Z68IpEVBYaj0Taf9Tu8cm21dWHuFlYk6C8Orgjx7Pqj/exec";
+
+
+
+/* =========================
+   VARIABLES
+========================= */
+
+let answer = "No";
+
+let noClicks = 0;
+
+
+
+/* =========================
+   CHANGE SCREEN
+========================= */
+
+function showScreen(number){
+
+    document
+    .querySelectorAll(".screen")
+    .forEach(screen => {
+
+        screen.classList.remove("active");
+
+    });
+
+
+    document
+    .getElementById("screen" + number)
+    .classList.add("active");
+
+}
+
+
+
+/* =========================
+   SAVE TO GOOGLE SHEET
+========================= */
+
+async function saveData(
+    event,
+    answerValue,
+    clicks,
+    selectedDate = "",
+    selectedPlace = ""
+){
+
+    try{
+
+        await fetch(
+            GOOGLE_SCRIPT_URL,
+            {
+
+                method:"POST",
+
+                mode:"no-cors",
+
+                body:JSON.stringify({
+
+                    event:event,
+
+                    answer:answerValue,
+
+                    noClicks:clicks,
+
+                    date:selectedDate,
+
+                    place:selectedPlace
+
+                })
+
+            }
+        );
+
+        console.log(
+            "Data sent to Google Sheet"
+        );
+
+    }
+
+    catch(error){
+
+        console.error(
+            "Error:",
+            error
+        );
+
+    }
+
+}
+
+
+
+/* =========================
+   YES BUTTON
+========================= */
+
+document
+.getElementById("yesBtn")
+.onclick = async function(){
+
+    answer = "Yes ❤️";
+
+
+    await saveData(
+        "YES_CLICKED",
+        answer,
+        noClicks
+    );
+
+
+    showScreen(2);
+
+};
+
+
+
+/* =========================
+   NO BUTTON
+========================= */
+
+document
+.getElementById("noBtn")
+.onclick = async function(){
+
+    noClicks++;
+
+
+    await saveData(
+        "NO_CLICKED",
+        "No 😭",
+        noClicks
+    );
+
+
+    const messages = [
+
+        "Are you sure? 🥺",
+
+        "Think again... 👀",
+
+        "Really? 😭",
+
+        "Pleaseee? 🥹❤️",
+
+        "Ek baar Yes daba ke dekho 😭",
+
+        "Please reconsider ❤️"
+
+    ];
+
+
+    document
+    .getElementById("noMessage")
+    .textContent =
+    messages[
+        Math.min(
+            noClicks - 1,
+            messages.length - 1
+        )
+    ];
+
+
+    if(noClicks >= 3){
+
+        const button =
+        document.getElementById("noBtn");
+
+
+        const x =
+        Math.random() * 200 - 100;
+
+
+        const y =
+        Math.random() * 100 - 50;
+
+
+        button.style.transform =
+        `translate(${x}px,${y}px)`;
+
+    }
+
+};
+
+
+
+/* =========================
+   PLAN BUTTON
+========================= */
+
+document
+.getElementById("planBtn")
+.onclick = async function(){
+
+    await saveData(
+        "PLAN_OPENED",
+        answer,
+        noClicks
+    );
+
+
+    showScreen(3);
+
+};
+
+
+
+/* =========================
+   DATE
+========================= */
+
+const dateInput =
+document.getElementById("date");
+
+
+const today =
+new Date();
+
+
+dateInput.min =
+today.toISOString()
+.split("T")[0];
+
+
+
+/* =========================
+   PLACE
+========================= */
+
+const placeSelect =
+document.getElementById("place");
+
+
+placeSelect.onchange =
+function(){
+
+    document
+    .getElementById("customBox")
+    .style.display =
+    placeSelect.value ===
+    "Your Choice ❤️"
+    ?
+    "block"
+    :
+    "none";
+
+};
+
+
+
+/* =========================
+   CONFIRM PLAN
+========================= */
+
+document
+.getElementById("confirmBtn")
+.onclick = async function(){
+
+    const error =
+    document.getElementById(
+        "errorMessage"
+    );
+
+
+    const selectedDate =
+    dateInput.value;
+
+
+    let selectedPlace =
+    placeSelect.value;
+
+
+
+    if(!selectedDate){
+
+        error.textContent =
+        "Pehle date choose karo ❤️";
+
+        return;
+
+    }
+
+
+
+    if(!selectedPlace){
+
+        error.textContent =
+        "Place choose karo 😭";
+
+        return;
+
+    }
+
+
+
+    if(
+        selectedPlace ===
+        "Your Choice ❤️"
+    ){
+
+        selectedPlace =
+        document
+        .getElementById("customPlace")
+        .value
+        .trim();
+
+
+        if(!selectedPlace){
+
+            error.textContent =
+            "Place ka naam batao 👀";
+
+            return;
+
+        }
+
+    }
+
+
+
+    error.textContent = "";
+
+
+
+    await saveData(
+
+        "PLAN_CONFIRMED",
+
+        "Yes ❤️",
+
+        noClicks,
+
+        selectedDate,
+
+        selectedPlace
+
+    );
+
+
+
+    const finalDate =
+    new Date(
+        selectedDate + "T00:00:00"
+    );
+
+
+
+    document
+    .getElementById("finalDate")
+    .textContent =
+    finalDate.toLocaleDateString(
+        "en-IN",
+        {
+
+            weekday:"long",
+
+            day:"numeric",
+
+            month:"long",
+
+            year:"numeric"
+
+        }
+    );
+
+
+
+    document
+    .getElementById("finalPlace")
+    .textContent =
+    selectedPlace;
+
+
+
+    showScreen(4);
+
+
+    createConfetti();
+
+};
+
+
+
+/* =========================
+   FLOATING HEARTS
+========================= */
+
+function createHeart(){
+
+    const heart =
+    document.createElement("div");
+
+
+    heart.className =
+    "heart";
+
+
+    heart.textContent =
+    [
+        "❤️",
+        "💕",
+        "💗",
+        "💖",
+        "💘"
+    ][
+        Math.floor(
+            Math.random() * 5
+        )
+    ];
+
+
+    heart.style.left =
+    Math.random() * 100 + "vw";
+
+
+    heart.style.fontSize =
+    15 +
+    Math.random() * 20 +
+    "px";
+
+
+    document
+    .body
+    .appendChild(heart);
+
+
+    setTimeout(
+        () => heart.remove(),
+        6000
+    );
+
+}
+
+
+setInterval(
+    createHeart,
+    500
+);
+
+
+
+/* =========================
+   CONFETTI
+========================= */
+
+function createConfetti(){
+
+    for(
+        let i = 0;
+        i < 100;
+        i++
+    ){
+
+        const piece =
+        document.createElement("div");
+
+
+        piece.className =
+        "confetti";
+
+
+        piece.style.left =
+        Math.random() * 100 + "vw";
+
+
+        piece.style.background =
+        `hsl(
+            ${Math.random() * 360},
+            80%,
+            60%
+        )`;
+
+
+        piece.style.animationDelay =
+        Math.random() * 1.5 + "s";
+
+
+        document
+        .body
+        .appendChild(piece);
+
+
+        setTimeout(
+            () => piece.remove(),
+            4000
+        );
+
+    }
+
+}
+
+</script>
+
+</body>
+
+</html>
